@@ -1,0 +1,113 @@
+# Codeforces 1080B playing in a casino tutorial
+
+Problem link https://codeforces.com/problemset/problem/1808/B 
+
+ 
+
+# Problem description 
+```
+This problem is set in a casino, where the person inputs 1 number, the number of test cases, then inputs first input doubled because you need to input the n and m, the n is the number of rows of inputs, and the m is the number of columns. To solve the problem, the players play in pairs, for example, there are 3 players, 1 playing 2, 1 playing 3, and 2 playing 3. Then the round gets the absolute value of player 1’s chips minus player 2’s chips. E.g.  
+
+In the game between the first and second player, the winner receives |1−7| + |4−9| + |2−2| + |8−1| + |5−4| = 19 chips. 
+```
+## Solution 1, brute force 
+
+# Logic 
+
+To use a for loop to sort the input and to use 2 for loops to calculate the total number of chips earned in the round. 
+
+ 
+
+## Code 
+```py
+for i in range(int(input())):
+    n, m = input().split()
+    n, m = int(n), int(m)
+    c = []
+    for _ in range(n):
+        row = [int(x) for x in input().split()]
+        c.append(row)
+    diffsum=0
+    for i in range(0,n-1):
+        for j in range(i+1,n):
+            for k in range(m):
+                dif=abs(c[i][k]-c[j][k])
+                diffsum+=dif
+    print(diffsum)
+```
+ 
+
+ 
+
+ 
+
+## Important parts and explanation 
+
+for i in range(0,n-1): 
+    for j in range(i+1,n): 
+        for k in range(m): 
+            dif=abs(c[i][k]-c[j][k]) 
+            diffsum+=dif 
+    print(diffsum) 
+
+The innermost layer of nested loops, I’ll explain how it works. 
+
+As c is the input of rows, the absolute value of the difference between c [i][k] meaning the ith person’s kth card, and c[j][k] meaning the jth person’s kth card. The number is then added to the variable that contains the sum of the differences of the first round, then the loop moves on to the second round. The print of the variable diffsum occurs every round and resets to zero because the code needs to output the sum of the differences after every round. 
+
+Time complexity O(n2) 
+
+ 
+
+Solution 2, sort 
+
+Code 
+
+for i in range(int(input())): 
+
+    n, m = input().split() 
+
+    n, m = int(n), int(m) 
+
+    c = [] 
+
+    for _ in range(n): 
+
+        row = [int(x) for x in input().split()] 
+
+        c.append(row) 
+
+    win = 0 
+
+    for j in range(m): 
+
+        sd = sorted(c[i][j] for i in range(n)) 
+
+        dif = 0 
+
+        ds = 0 
+
+        for i in range(1, n): 
+
+            dif += (sd[i] - sd[i - 1]) * i 
+
+            ds +=dif 
+
+        win += ds 
+
+    print(win) 
+
+ 
+
+Explanation 
+
+Here, we sort the inputs because after the input is sorted, there is no point in absolute value-ing, also, the input gets split, in other words, easier and faster for us to do calculation. Then we put the difference into the variable “ds”, as in difference sum. Then we print the variable “ds” 
+
+ 
+
+Conclusion 
+
+This problem requires some factual knowledge of code, but otherwise, it may only take minutes. 
+
+By Mr.Superspencerboy https://codeforces.com/profile/Mr.superspencerboy 
+
+ 
